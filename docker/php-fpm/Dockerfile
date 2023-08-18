@@ -1,7 +1,7 @@
 FROM php:8.1-fpm-alpine
 
 RUN apk --no-cache update \
-    && apk add --no-cache autoconf g++ make freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
+    && apk add --no-cache bash autoconf g++ make freetype libpng libjpeg-turbo freetype-dev libpng-dev libjpeg-turbo-dev \
     postgresql-dev \
     icu-dev \
     \
