@@ -15,3 +15,7 @@ RUN apk --no-cache update \
     docker-php-ext-install gd
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+RUN rm -rf /var/cache/*
+
+CMD ["php-fpm", "--nodaemonize"]
