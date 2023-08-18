@@ -1,6 +1,9 @@
 PHP_SERVICE := php-fpm
 
 build:
+	@docker-compose build
+
+up:
 	@docker-compose up -d
 
 migration:
@@ -11,4 +14,3 @@ parse:
 
 down:
 	@docker-compose down --volumes
-	@make -s clean
