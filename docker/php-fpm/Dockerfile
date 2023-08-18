@@ -18,4 +18,4 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 RUN rm -rf /var/cache/*
 
-CMD ["php-fpm", "--nodaemonize"]
+CMD composer install ; wait-for-it database:5432 -- bin/console doctrine:migrations:migrate ;  php-fpm
