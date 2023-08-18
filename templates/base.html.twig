@@ -17,6 +17,11 @@
 <body>
 <div class="container-xl">
     {% include "include/header.html.twig" %}
+    {% for flash in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ flash }}
+        </div>
+    {% endfor %}
     {% block body %}{% endblock %}
 </div>
 </body>

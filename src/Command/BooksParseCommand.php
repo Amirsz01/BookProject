@@ -12,6 +12,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -31,6 +33,7 @@ class BooksParseCommand extends Command
     public function __construct(
         private readonly HttpClientInterface    $client,
         private readonly EntityManagerInterface $em,
+        private readonly Filesystem             $filesystem,
     )
     {
         parent::__construct();
@@ -67,7 +70,7 @@ class BooksParseCommand extends Command
             }
             $book->setIsbn($bookData['isbn']);
             if (isset($bookData['thumbnailUrl'])) {
-                $book->setThumbnailUrl($bookData['thumbnailUrl']);
+                $book->setThumbnailUrl($this->saveImage($bookData['thumbnailUrl']));
             }
             $book->setPageCount($bookData['pageCount']);
             $book->setStatus($bookData['status']);
@@ -82,7 +85,7 @@ class BooksParseCommand extends Command
             $this->em->flush();
         }
 
-        $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
+        $io->success('Parse is complete.');
 
         return Command::SUCCESS;
     }
@@ -115,5 +118,15 @@ class BooksParseCommand extends Command
     {
         return (bool)$this->em->getRepository(Book::class)
             ->findOneBy(['title' => $title]);
+    }
+
+    public function saveImage(string $imageUri): string
+    {
+        $uuid = Uuid::v4()->toRfc4122();
+        $ext = pathinfo($imageUri, PATHINFO_EXTENSION);
+        $content = file_get_contents($imageUri);
+        $this->filesystem->dumpFile("public/images/$uuid.$ext", $content);
+
+        return "$uuid.$ext";
     }
 }

@@ -9,6 +9,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FeedbackRepository::class)]
 class Feedback
 {
+    public function __construct()
+    {
+        if (is_null($this->createdAt)) {
+            $this->createdAt = new \DateTime();
+        }
+    }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

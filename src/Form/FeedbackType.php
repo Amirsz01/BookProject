@@ -39,7 +39,9 @@ class FeedbackType extends AbstractType
             ->add('phone', TelType::class, [
                 'label' => 'Телефон'
             ])
-            ->add('captcha', CaptchaType::class)
+            ->add('captcha', CaptchaType::class, [
+                'label' => 'Капча'
+            ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Отправить'
             ]);
