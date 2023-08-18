@@ -18,6 +18,9 @@
 
 Для запуска:
 1. Прописать все в env 
-2. ``make up``
-2. ``make migration``
-3. ``make parse``
+2. ``composer install``
+3. ``npm ci``
+4. ``npm run build``
+5. ``make up``
+6. ``make migration``
+7. ``make parse``
