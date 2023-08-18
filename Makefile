@@ -1,13 +1,7 @@
 PHP_SERVICE := php-fpm
 
-build:
-	@docker-compose build
-
 up:
 	@docker-compose up -d
-
-composer:
-	@docker-compose exec -T $(PHP_SERVICE) composer install
 
 migration:
 	@docker-compose exec -T $(PHP_SERVICE) bin/console doctrine:migrations:migrate
