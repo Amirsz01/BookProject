@@ -17,11 +17,13 @@ class FeedbackController extends AbstractController
     {
     }
 
-    #[Route('/feedback', name: 'app_feedback')]
+    #[Route('/feedback', name: 'app_feedback', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $form = $this->createForm(FeedbackType::class)
             ->handleRequest($request);
+
+        //TODO вынести в сервис
 
         if ($form->isSubmitted() && $form->isValid()) {
             $feedback = $form->getData();

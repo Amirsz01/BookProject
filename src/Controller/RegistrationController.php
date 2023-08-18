@@ -23,6 +23,7 @@ class RegistrationController extends AbstractController
         $form = $this->createForm(RegistrationFormType::class)
         ->handleRequest($request);
 
+        //TODO вынести в сервис
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $plaintextPassword = $form->get('password')->getData();

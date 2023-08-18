@@ -22,7 +22,7 @@
                             {{ book.title }}
                         </div>
                         <div class="card-body">
-                            <img class="h-100" src="{{ book.thumbnailUrl }}" alt="Картинка">
+                            <img class="h-100" src="images/{{ book.thumbnailUrl }}" alt="Картинка">
                         </div>
                         <div class="card-footer">
                             <a class="btn btn-sm btn-warning" href="{{ path('app_books_show', {'id': book.id}) }}">Посмотреть</a>

@@ -24,11 +24,11 @@ class IndexController extends AbstractController
     #[Route('', name: 'app_index')]
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        $categories = $this->em->getRepository(Category::class)->findBy(['parent' => $request->get('category')]);
+        $categories = $this->em->getRepository(Category::class)->getSubCategories($request->get('category'));
 
         $query = $this->bookService->getBooksQuery($request->get('category'));
 
-        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), 10);
+        $pagination = $paginator->paginate($query, $request->query->getInt('page', 1), $_ENV['PER_PAGE']);
 
         return $this->render('index/index.html.twig', [
             'pagination' => $pagination,

@@ -10,7 +10,12 @@
     </ul>
 
     <div class="col-md-3 text-end">
-        <a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2">Login</a>
-        <a href="{{ path('app_registration') }}" class="btn btn-primary">Sign-up</a>
+        {% if not is_granted('IS_AUTHENTICATED') %}
+            <a href="{{ path('app_login') }}" class="btn btn-outline-primary me-2">Логин</a>
+            <a href="{{ path('app_registration') }}" class="btn btn-primary">Регистрация</a>
+        {% else %}
+            <a href="{{ path('admin') }}" class="btn btn-primary">Админка</a>
+            <a href="{{ path('app_logout') }}" class="btn btn-primary">Выход</a>
+        {% endif %}
     </div>
 </header>
