@@ -3,18 +3,36 @@
 {% block title %}Hello IndexController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'F:/ProjectsMain/Sandbox/BookProject/src/Controller/IndexController.php'|file_link(0) }}">src/Controller/IndexController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'F:/ProjectsMain/Sandbox/BookProject/templates/index/index.html.twig'|file_link(0) }}">templates/index/index.html.twig</a></code></li>
-    </ul>
-</div>
+    {% if categories is not empty %}
+        <h2>Категории</h2>
+        <ul>
+            {% for category in categories %}
+                <li>
+                    <a href="/?category={{ category.id }}">{{ category.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    {% if pagination.getTotalItemCount > 0 %}
+        <div class="row row-cols-4 g-1">
+            {% for book in pagination %}
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            {{ book.title }}
+                        </div>
+                        <div class="card-body">
+                            <img class="h-100" src="{{ book.thumbnailUrl }}" alt="Картинка">
+                        </div>
+                        <div class="card-footer">
+                            <a class="btn btn-sm btn-warning" href="{{ path('app_books_show', {'id': book.id}) }}">Посмотреть</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="navigation mt-3 d-flex justify-content-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    {% endif %}
 {% endblock %}
