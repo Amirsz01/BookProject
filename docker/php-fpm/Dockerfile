@@ -13,3 +13,5 @@ RUN apk --no-cache update \
     --with-freetype \
     --with-jpeg && \
     docker-php-ext-install gd
+
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
