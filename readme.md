@@ -18,6 +18,6 @@
 
 Для запуска:
 1. Прописать все в env 
+2. ``make up``
 2. ``make migration``
 3. ``make parse``
-4. ``make build``
