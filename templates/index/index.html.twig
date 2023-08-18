@@ -8,31 +8,33 @@
         <ul>
             {% for category in categories %}
                 <li>
-                    <a href="/?category={{ category.id }}">{{ category.title }}</a>
+                    <a href="{{ path('app_index_category', {'id': category.id }) }}">{{ category.title }}</a>
                 </li>
             {% endfor %}
         </ul>
     {% endif %}
-    {% if pagination.getTotalItemCount > 0 %}
-        <div class="row row-cols-4 g-1">
-            {% for book in pagination %}
-                <div class="col">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            {{ book.title }}
-                        </div>
-                        <div class="card-body">
-                            <img class="h-100" src="images/{{ book.thumbnailUrl }}" alt="Картинка">
-                        </div>
-                        <div class="card-footer">
-                            <a class="btn btn-sm btn-warning" href="{{ path('app_books_show', {'id': book.id}) }}">Посмотреть</a>
+    {% if pagination is defined %}
+        {% if pagination.getTotalItemCount > 0 %}
+            <div class="row row-cols-4 g-1">
+                {% for book in pagination %}
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                {{ book.title }}
+                            </div>
+                            <div class="card-body">
+                                <img class="h-100" src="/images/{{ book.thumbnailUrl }}" alt="Картинка">
+                            </div>
+                            <div class="card-footer">
+                                <a class="btn btn-sm btn-warning" href="{{ path('app_books_show', {'id': book.id}) }}">Посмотреть</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="navigation mt-3 d-flex justify-content-center">
-            {{ knp_pagination_render(pagination) }}
-        </div>
+                {% endfor %}
+            </div>
+            <div class="navigation mt-3 d-flex justify-content-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        {% endif %}
     {% endif %}
 {% endblock %}

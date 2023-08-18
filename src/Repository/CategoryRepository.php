@@ -46,8 +46,8 @@ class CategoryRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-    public function getSubCategories(?int $categoryId): array
+    public function getMainCategories(): array
     {
-        return $this->findBy(['parent' => $categoryId]);
+        return $this->findBy(['parent' => null]);
     }
 }

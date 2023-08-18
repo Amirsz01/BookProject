@@ -5,7 +5,7 @@
 {% block body %}
     <div class="d-flex flex-row card">
         <div class="card-body flex-grow-0">
-            <img src="images/{{ book.thumbnailUrl }}" alt="Изображение">
+            <img src="/images/{{ book.thumbnailUrl }}" alt="Изображение">
         </div>
         <div class="card-body">
             <h2>{{ book.title }}</h2>
@@ -17,9 +17,13 @@
                 <div>
                     Категории:
                     {% for category in book.category.categories %}
-                        <span class="badge rounded-pill text-bg-secondary">{{ category.title }}</span>
+                        <a href="{{ path('app_index_category', {'id': category.id}) }}" class="text-decoration-none">
+                            <span class="badge rounded-pill text-bg-secondary">{{ category.title }}</span>
+                        </a>
                     {% endfor %}
-                    <span class="badge rounded-pill text-bg-secondary">{{ book.category.title }}</span>
+                    <a href="{{ path('app_index_category', {'id': book.category.id}) }}" class="text-decoration-none">
+                        <span class="badge rounded-pill text-bg-secondary">{{ book.category.title }}</span>
+                    </a>
                 </div>
             </div>
         </div>

@@ -3,32 +3,34 @@
 namespace App\Controller;
 
 use App\Form\FeedbackType;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\FeedbackService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class FeedbackController extends AbstractController
 {
+
     public function __construct(
-        private readonly EntityManagerInterface $em,
+        private readonly FeedbackService $feedbackService,
     )
     {
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     #[Route('/feedback', name: 'app_feedback', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $form = $this->createForm(FeedbackType::class)
             ->handleRequest($request);
 
-        //TODO вынести в сервис
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $feedback = $form->getData();
-            $this->em->persist($feedback);
-            $this->em->flush();
+
+            $this->feedbackService->handleForm($form);
 
             $this->addFlash('success', 'Сообщение успешно отправлено.');
 

@@ -37,7 +37,8 @@ class FeedbackType extends AbstractType
                 ],
             ])
             ->add('phone', TelType::class, [
-                'label' => 'Телефон'
+                'label' => 'Телефон',
+                'required' => false,
             ])
             ->add('captcha', CaptchaType::class, [
                 'label' => 'Капча'
